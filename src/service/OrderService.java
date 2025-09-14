@@ -17,32 +17,27 @@ public class OrderService {
 
     public void startOrder() {
         System.out.println("어서오세요 서브웨이 입니다!!");
-
         Product product = chooseMenu();
 
-        if (product instanceof Sandwich sandwich) {
-            BreadCustom breadCustom = chooseBread();
-            Cheese cheese = chooseCheese();
-            List<Addition> additions = chooseAdditions();
-
-            sandwich.setBreadSize(breadCustom.getBreadSize());
-            for(Addition addition : additions) {
-                sandwich.addAddition(addition);
+        if (product instanceof CustomProduct customProduct) {
+            if (customProduct instanceof Sandwich sandwich) {
+                BreadCustom breadCustom = chooseBread();
+                sandwich.setBreadSize(breadCustom.getBreadSize());
             }
-            List<Vegetable> vegetables = chooseVegetables();
-            List<Source> sources = chooseSources();
-            displayOrderSummary(sandwich, cheese, additions, vegetables, sources);
-
-        } else if (product instanceof Salad salad) {
-            Cheese cheese = chooseCheese();
-            List<Addition> additions = chooseAdditions();
-            for(Addition addition : additions) {
-                salad.addAddition(addition);
-            }
-            List<Vegetable> vegetables = chooseVegetables();
-            List<Source> sources = chooseSources();
-            displayOrderSummary(salad, cheese, additions, vegetables, sources);
+            customizeProduct(customProduct);
         }
+    }
+
+    private void customizeProduct(CustomProduct customProduct) {
+        Cheese cheese = chooseCheese();
+        List<Addition> additions = chooseAdditions();
+        for(Addition addition : additions) {
+            customProduct.addAddition(addition);
+        }
+        List<Vegetable> vegetables = chooseVegetables();
+        List<Source> sources = chooseSources();
+
+        displayOrderSummary(customProduct, cheese, additions, vegetables, sources);
     }
 
     public Product chooseMenu() {
