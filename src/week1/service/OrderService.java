@@ -68,7 +68,7 @@ public class OrderService {
     private List<Addition> chooseAdditions() {
         additionCatalog.displayAddition();
         int additionCount = additionCatalog.additionCount();
-        List<Integer> numbers = choose.manyChoose("추가할 재료를 선택해주세요.", 1, additionCount);
+        List<Integer> numbers = choose.manyChoose("추가할 재료를 선택해주세요. 30cm는 2배의 추가 비용이 발생합니다", 1, additionCount);
 
         List<Addition> selectedAdditions = new ArrayList<>();
         for (int num : numbers) {
@@ -96,22 +96,35 @@ public class OrderService {
         }
         return selectedSources;
     }
-    private void displayOrderSummary(CustomProduct customProduct , BreadCustom breadCustom, Cheese cheese, List<Addition> additions,
+    private void displayOrderSummary(CustomProduct customProduct, BreadCustom breadCustom, Cheese cheese, List<Addition> additions,
                                      List<Vegetable> vegetables, List<Source> sources) {
-        System.out.println("\n--------------영수증-----------------");
-        System.out.println("선택 메뉴: " + customProduct.getName());
+        System.out.println("\n------------------영수증---------------------");
+
+        int basePrice = 0;
+        if (customProduct instanceof Sandwich sandwich) {
+            basePrice = (sandwich.getBreadSize() == 15) ? sandwich.getPrice15cm() : sandwich.getPrice30cm();
+        } else if (customProduct instanceof Salad salad) {
+            basePrice = salad.getPrice();
+        }
+        System.out.println(customProduct.getName() + ": " + basePrice + "원");
+
         if (customProduct instanceof Sandwich && breadCustom != null) {
             String toastedStatus = breadCustom.isToasted() ? "구움" : "안 구움";
-            System.out.printf("선택 빵: %s %dcm (%s)\n",
+            System.out.printf("  - 빵: %s %dcm (%s)\n",
                     breadCustom.getBread().getName(),
                     breadCustom.getBreadSize(),
                     toastedStatus);
         }
-        System.out.println("선택 치즈: " + cheese.getName());
+        System.out.println("  - 치즈: " + cheese.getName());
         if (!additions.isEmpty()) {
-            System.out.print("추가 재료: ");
-            additions.forEach(a -> System.out.print(a.getName() + " "));
-            System.out.println();
+            System.out.println("추가 재료:");
+            for (Addition addition : additions) {
+                int additionPrice = addition.getPrice();
+                if (customProduct instanceof Sandwich sandwich && sandwich.getBreadSize() == 30) {
+                    additionPrice *= 2;
+                }
+                System.out.println("  - " + addition.getName() + " (+" + additionPrice + "원)");
+            }
         }
         if (!vegetables.isEmpty()) {
             System.out.print("제외한 야채: ");
@@ -125,6 +138,6 @@ public class OrderService {
         }
         System.out.println("------------------------------------------");
         System.out.println("최종 가격: " + customProduct.calculatePrice() + "원");
-        System.out.println("-----------------------------------");
+        System.out.println("------------------------------------------");
     }
 }

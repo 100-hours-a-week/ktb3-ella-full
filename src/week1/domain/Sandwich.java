@@ -21,6 +21,9 @@ public class Sandwich extends CustomProduct{
     public int getPrice30cm() {
         return price30cm;
     }
+    public int getBreadSize() {
+        return breadSize;
+    }
 
     @Override
     public int calculatePrice() {
