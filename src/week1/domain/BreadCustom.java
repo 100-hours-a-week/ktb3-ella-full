@@ -13,4 +13,10 @@ public class BreadCustom {
     public int getBreadSize() {
         return breadSize;
     }
+    public boolean isToasted() {
+        return isToasted;
+    }
+    public Bread getBread() {
+        return bread;
+    }
 }
