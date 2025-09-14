@@ -7,7 +7,7 @@ public class Choose {
 
     public int oneChoose(String msg, int min, int max) {
         System.out.print(msg);
-        System.out.printf("%d ~ %d 중에 원하시는 것의 번호를 입력하세요\n", min, max);
+        System.out.printf("\n%d ~ %d 중에 원하시는 것의 번호를 입력하세요\n", min, max);
         while (true){
             String line = sc.nextLine().trim();
             try {
