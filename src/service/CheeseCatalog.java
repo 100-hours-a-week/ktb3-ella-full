@@ -1,4 +1,6 @@
-package domain;
+package service;
+
+import domain.Cheese;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +22,7 @@ public class CheeseCatalog {
         return cheeses.get(number - 1);
     }
 
-    public void displayBreads(){
+    public void displayCheeses(){
         System.out.println("\n--------------------치즈 종류--------------------");
         for(int i=0; i<cheeses.size(); i++){
             Cheese cheese = cheeses.get(i);

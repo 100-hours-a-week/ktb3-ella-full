@@ -11,4 +11,13 @@ public class Salad extends CustomProduct{
     public int getPrice() {
         return price;
     }
+
+    @Override
+    public int calculatePrice() {
+        int totalPrice = price;
+        for(Addition addition:additions){
+            totalPrice += addition.getPrice();
+        }
+        return totalPrice;
+    }
 }

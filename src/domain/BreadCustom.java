@@ -10,4 +10,7 @@ public class BreadCustom {
         this.breadSize = breadSize;
         this.isToasted = isToasted;
     }
+    public int getBreadSize() {
+        return breadSize;
+    }
 }

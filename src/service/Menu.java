@@ -1,4 +1,8 @@
-package domain;
+package service;
+
+import domain.Product;
+import domain.Salad;
+import domain.Sandwich;
 
 import java.util.ArrayList;
 import java.util.List;
