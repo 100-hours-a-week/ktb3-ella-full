@@ -1,7 +1,6 @@
-package service;
+package week1.service;
 
-import domain.Addition;
-import domain.Vegetable;
+import week1.domain.Vegetable;
 
 import java.util.ArrayList;
 import java.util.List;

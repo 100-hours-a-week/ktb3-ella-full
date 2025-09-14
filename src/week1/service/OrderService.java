@@ -1,7 +1,7 @@
-package service;
+package week1.service;
 
-import domain.*;
-import view.Choose;
+import week1.domain.*;
+import week1.view.Choose;
 
 import java.util.ArrayList;
 import java.util.List;

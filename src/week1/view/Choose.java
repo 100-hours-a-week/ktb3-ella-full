@@ -1,4 +1,4 @@
-package view;
+package week1.view;
 
 import java.util.ArrayList;
 import java.util.List;

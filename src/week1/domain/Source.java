@@ -1,4 +1,4 @@
-package domain;
+package week1.domain;
 
 public class Source {
     String name;

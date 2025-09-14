@@ -1,12 +1,11 @@
-package domain;
+package week1.domain;
 
-public class Cheese {
+public class Bread {
     String name;
 
-    public Cheese(String name){
+    public Bread(String name){
         this.name = name;
     }
-
     public String getName(){
         return name;
     }

@@ -1,6 +1,6 @@
-package service;
+package week1.service;
 
-import domain.Cheese;
+import week1.domain.Cheese;
 
 import java.util.ArrayList;
 import java.util.List;

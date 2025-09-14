@@ -1,5 +1,6 @@
-import service.*;
-import domain.*;
+package week1;
+
+import week1.service.*;
 
 public class SubwayCli {
     public static void main(String[] args) {

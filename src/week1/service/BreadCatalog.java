@@ -1,6 +1,6 @@
-package service;
+package week1.service;
 
-import domain.Bread;
+import week1.domain.Bread;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,8 +1,8 @@
-package service;
+package week1.service;
 
-import domain.Product;
-import domain.Salad;
-import domain.Sandwich;
+import week1.domain.Product;
+import week1.domain.Salad;
+import week1.domain.Sandwich;
 
 import java.util.ArrayList;
 import java.util.List;
