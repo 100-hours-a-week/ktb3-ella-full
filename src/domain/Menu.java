@@ -35,4 +35,9 @@ public class Menu {
     public int getMenuCount(){
         return products.size();
     }
+
+    public Product getProductByNumber(int number) {
+        if (number < 1 || number > products.size()) return null;
+        return products.get(number - 1);
+    }
 }
