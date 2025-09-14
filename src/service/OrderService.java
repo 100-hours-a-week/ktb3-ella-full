@@ -3,6 +3,7 @@ package service;
 import domain.*;
 import view.Choose;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrderService {
@@ -11,6 +12,8 @@ public class OrderService {
     BreadCatalog breadCatalog = new BreadCatalog();
     CheeseCatalog cheeseCatalog = new CheeseCatalog();
     AdditionCatalog additionCatalog = new AdditionCatalog();
+    VegetableCatalog  vegetableCatalog = new VegetableCatalog();
+    SourceCatalog  sourceCatalog = new SourceCatalog();
 
     public void startOrder() {
         System.out.println("어서오세요 서브웨이 입니다!!");
@@ -26,7 +29,9 @@ public class OrderService {
             for(Addition addition : additions) {
                 sandwich.addAddition(addition);
             }
-            displayOrderSummary(sandwich, cheese, additions);
+            List<Vegetable> vegetables = chooseVegetables();
+            List<Source> sources = chooseSources();
+            displayOrderSummary(sandwich, cheese, additions, vegetables, sources);
 
         } else if (product instanceof Salad salad) {
             Cheese cheese = chooseCheese();
@@ -34,7 +39,9 @@ public class OrderService {
             for(Addition addition : additions) {
                 salad.addAddition(addition);
             }
-            displayOrderSummary(salad, cheese, additions);
+            List<Vegetable> vegetables = chooseVegetables();
+            List<Source> sources = chooseSources();
+            displayOrderSummary(salad, cheese, additions, vegetables, sources);
         }
     }
 
@@ -67,19 +74,50 @@ public class OrderService {
         int additionCount = additionCatalog.additionCount();
         List<Integer> numbers = choose.manyChoose("추가할 재료를 선택해주세요.", 1, additionCount);
 
-        List<Addition> selectedAdditions = new java.util.ArrayList<>();
+        List<Addition> selectedAdditions = new ArrayList<>();
         for (int num : numbers) {
             selectedAdditions.add(additionCatalog.getByNumber(num));
         }
         return selectedAdditions;
     }
-    private void displayOrderSummary(CustomProduct customProduct , Cheese cheese, List<Addition> additions) {
+    private List<Vegetable> chooseVegetables() {
+        vegetableCatalog.displayVegetables();
+        int vegetableCount = vegetableCatalog.vegetableCount();
+        List<Integer> numbers = choose.manyChoose("제외할 야채를 선택해주세요", 1, vegetableCount);
+        List<Vegetable> selectedVegetables = new ArrayList<>();
+        for(int num : numbers){
+            selectedVegetables.add(vegetableCatalog.getByNumber(num));
+        }
+        return selectedVegetables;
+    }
+    private List<Source> chooseSources() {
+        sourceCatalog.displaySources();
+        int sourceCount = sourceCatalog.sourceCount();
+        List<Integer> numbers = choose.manyChoose("추가할 소스를 선택해주세요", 1, sourceCount);
+        List<Source> selectedSources = new ArrayList<>();
+        for(int num : numbers){
+            selectedSources.add(sourceCatalog.getByNumber(num));
+        }
+        return selectedSources;
+    }
+    private void displayOrderSummary(CustomProduct customProduct , Cheese cheese, List<Addition> additions,
+                                     List<Vegetable> vegetables, List<Source> sources) {
         System.out.println("\n--- 최종 주문 내역 ---");
         System.out.println("선택 메뉴: " + customProduct.getName());
         System.out.println("선택 치즈: " + cheese.getName());
         if (!additions.isEmpty()) {
             System.out.print("추가 재료: ");
             additions.forEach(a -> System.out.print(a.getName() + " "));
+            System.out.println();
+        }
+        if (!vegetables.isEmpty()) {
+            System.out.print("제외한 야채: ");
+            vegetables.forEach(a -> System.out.print(a.getName() + " "));
+            System.out.println();
+        }
+        if (!sources.isEmpty()) {
+            System.out.print("선택 소스: ");
+            sources.forEach(a -> System.out.print(a.getName() + " "));
             System.out.println();
         }
         System.out.println("--------------------");
