@@ -1,8 +1,8 @@
 package week1.domain;
 
 public class Addition {
-    String name;
-    int price;
+    private final String name;
+    private final int price;
 
     public Addition(String name, int price){
         this.name = name;

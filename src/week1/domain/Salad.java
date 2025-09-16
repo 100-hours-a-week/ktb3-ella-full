@@ -1,7 +1,7 @@
 package week1.domain;
 
 public class Salad extends CustomProduct{
-    int price;
+    private final int price;
 
     public Salad(String name, int price) {
         super(name);

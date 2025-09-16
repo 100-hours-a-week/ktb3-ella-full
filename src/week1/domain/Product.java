@@ -1,7 +1,7 @@
 package week1.domain;
 
 public class Product {
-    String name;
+    private final String name;
 
     public Product (String name){
         this.name = name;

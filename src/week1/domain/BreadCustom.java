@@ -1,12 +1,11 @@
 package week1.domain;
 
-public class BreadCustom {
-    Bread bread;
-    int breadSize;
-    boolean isToasted;
+public class BreadCustom extends Bread{
+    private final int breadSize;
+    private final boolean isToasted;
 
-    public BreadCustom(Bread bread, int breadSize, boolean isToasted) {
-        this.bread = bread;
+    public BreadCustom(String name, int breadSize, boolean isToasted) {
+        super(name);
         this.breadSize = breadSize;
         this.isToasted = isToasted;
     }
@@ -15,8 +14,5 @@ public class BreadCustom {
     }
     public boolean isToasted() {
         return isToasted;
-    }
-    public Bread getBread() {
-        return bread;
     }
 }

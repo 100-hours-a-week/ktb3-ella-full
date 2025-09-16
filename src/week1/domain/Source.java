@@ -1,7 +1,7 @@
 package week1.domain;
 
 public class Source {
-    String name;
+    private final String name;
 
     public Source(String name){
         this.name = name;

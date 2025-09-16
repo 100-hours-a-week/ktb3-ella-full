@@ -1,8 +1,8 @@
 package week1.domain;
 
 public class Sandwich extends CustomProduct{
-    int price15cm;
-    int price30cm;
+    private final int price15cm;
+    private final int price30cm;
 
     private int breadSize = 15;
 
