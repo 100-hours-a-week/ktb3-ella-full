@@ -1,10 +1,12 @@
 package week1.domain;
 
-public class Sandwich extends CustomProduct{
+public class Sandwich extends CustomProduct {
     private final int price15cm;
     private final int price30cm;
+    private CustomizedBread customizedBread;
 
-    private int breadSize = 15;
+    private final static int BREAD_SMALL_SIZE = 15;
+    private final static int BREAD_LARGE_SIZE = 30;
 
     public Sandwich(String name, int price15cm, int price30cm) {
         super(name);
@@ -12,25 +14,31 @@ public class Sandwich extends CustomProduct{
         this.price30cm = price30cm;
     }
 
-    public void setBreadSize(int breadSize) {
-        this.breadSize = breadSize;
+    public void setBreadCustom(CustomizedBread customizedBread) {
+        this.customizedBread = customizedBread;
     }
+
     public int getPrice15cm() {
         return price15cm;
     }
+
     public int getPrice30cm() {
         return price30cm;
     }
-    public int getBreadSize() {
-        return breadSize;
+
+    @Override
+    public int getBasePrice() {
+        if (customizedBread == null) {
+            return price15cm;
+        }
+        return (customizedBread.getBreadSize() == BREAD_SMALL_SIZE) ? price15cm : price30cm;
     }
 
     @Override
-    public int calculatePrice() {
-        int totalPrice = (breadSize == 15) ? price15cm : price30cm;
-        for(Addition addition:additions){
-            totalPrice += (breadSize==15)? addition.getPrice(): addition.getPrice()*2;
+    public int getPriceFor(Addition addition) {
+        if (customizedBread != null && customizedBread.getBreadSize() == BREAD_LARGE_SIZE) {
+            return addition.getPrice() * 2;
         }
-        return totalPrice;
+        return addition.getPrice();
     }
 }

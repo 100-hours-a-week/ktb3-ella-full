@@ -21,15 +21,7 @@ public class Catalog<T extends Nameable> {
         return items.size();
     }
 
-    public void display() {
-        System.out.println("\n--------------------종류--------------------");
-        for(int i=0; i<items.size(); i++){
-            System.out.print((i+1)+". "+items.get(i).getName());
-            if(items instanceof Priceable){
-                System.out.println(" (+"+ ((Priceable) items).getPrice()+")");
-            }
-            System.out.println();
-        }
-        System.out.println("-------------------------------------------");
+    public List<T> getItems() {
+        return items;
     }
 }

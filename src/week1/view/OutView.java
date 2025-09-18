@@ -1,0 +1,80 @@
+package week1.view;
+
+import week1.domain.*;
+
+import java.util.List;
+
+public class OutView {
+    private final static int BREAD_SMALL_SIZE = 15;
+    private final static int BREAD_LARGE_SIZE = 30;
+
+    public void WelcomeView(){
+        System.out.println("어서오세요. 서브웨이 입니다!");
+    }
+
+    public <T extends Nameable> void printCatalog(List<T> items){
+        System.out.println("\n--------------------종류--------------------");
+        for(int i=0; i<items.size(); i++){
+            T item = items.get(i);
+            System.out.print((i+1)+". "+item.getName());
+            if(item instanceof Priceable){
+                System.out.println(" (+"+ ((Priceable) item).getPrice()+")");
+            }
+            System.out.println();
+        }
+        System.out.println("-------------------------------------------");
+    }
+
+    public void printMenu(List<Product> products){
+        System.out.println("\n--------------------메뉴--------------------");
+        for(int i=0; i<products.size(); i++) {
+            Product product = products.get(i);
+            System.out.print((i+1)+"."+ product.getName()+" ");
+            if (product instanceof Sandwich sandwich) {
+                System.out.printf("(15cm: %d원 | 30cm: %d원)\n", sandwich.getPrice15cm(), sandwich.getPrice30cm());
+            } else if (product instanceof Salad salad) {
+                System.out.printf("(%d원)\n", salad.getBasePrice());
+            }
+        }
+        System.out.println("-------------------------------------------");
+    }
+
+    public void printOrderSummary(CustomProduct customProduct, CustomizedBread customizedBread, Cheese cheese, List<Addition> additions,
+                                  List<Vegetable> vegetables, List<Source> sources) {
+
+        System.out.println("\n------------------ 영수증 ---------------------");
+
+        System.out.printf("%s: %,d원\n", customProduct.getName(), customProduct.getBasePrice());
+
+        if (customProduct instanceof Sandwich) {
+            String toastedStatus = customizedBread.isToasted() ? "구움" : "안 구움";
+            System.out.printf("  - 빵: %s %dcm (%s)\n",
+                    customizedBread.getName(),
+                    customizedBread.getBreadSize(),
+                    toastedStatus);
+        }
+        System.out.println("  - 치즈: " + cheese.getName());
+
+        if (!additions.isEmpty()) {
+            System.out.println("  [추가 재료]");
+            for (Addition addition : additions) {
+                int price = customProduct.getPriceFor(addition);
+                System.out.printf("  - %s (+%,d원)\n", addition.getName(), price);
+            }
+        }
+        if (!vegetables.isEmpty()) {
+            System.out.print("  - 제외한 야채: ");
+            vegetables.forEach(v -> System.out.print(v.getName() + " "));
+            System.out.println();
+        }
+        if (!sources.isEmpty()) {
+            System.out.print("  - 선택 소스: ");
+            sources.forEach(s -> System.out.print(s.getName() + " "));
+            System.out.println();
+        }
+
+        System.out.println("-------------------------------------------");
+        System.out.printf("최종 합계: %,d원\n", customProduct.calculatePrice());
+        System.out.println("-------------------------------------------");
+    }
+}

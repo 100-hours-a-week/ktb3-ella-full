@@ -1,6 +1,6 @@
 package week1.domain;
 
-public class Salad extends CustomProduct{
+public class Salad extends CustomProduct {
     private final int price;
 
     public Salad(String name, int price) {
@@ -8,16 +8,13 @@ public class Salad extends CustomProduct{
         this.price = price;
     }
 
-    public int getPrice() {
+    @Override
+    public int getBasePrice() {
         return price;
     }
 
     @Override
-    public int calculatePrice() {
-        int totalPrice = price;
-        for(Addition addition:additions){
-            totalPrice += addition.getPrice();
-        }
-        return totalPrice;
+    public int getPriceFor(Addition addition) {
+        return addition.getPrice();
     }
 }
