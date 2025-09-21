@@ -5,8 +5,6 @@ import week1.domain.*;
 import java.util.List;
 
 public class OutView {
-    private final static int BREAD_SMALL_SIZE = 15;
-    private final static int BREAD_LARGE_SIZE = 30;
 
     public void WelcomeView(){
         System.out.println("어서오세요. 서브웨이 입니다!");
@@ -18,7 +16,7 @@ public class OutView {
             T item = items.get(i);
             System.out.print((i+1)+". "+item.getName());
             if(item instanceof Priceable){
-                System.out.println(" (+"+ ((Priceable) item).getPrice()+")");
+                System.out.print(" (+"+ ((Priceable) item).getPrice()+")");
             }
             System.out.println();
         }
@@ -76,5 +74,14 @@ public class OutView {
         System.out.println("-------------------------------------------");
         System.out.printf("최종 합계: %,d원\n", customProduct.calculatePrice());
         System.out.println("-------------------------------------------");
+    }
+
+    public void printBreadReadyMessage(String result) {
+        System.out.println(result);
+        System.out.println("[" + result + "] "+ "잠시만요, 빵 준비해드리겠습니다.");
+    }
+
+    public void printBreadToastError() {
+        System.out.println("\n빵 조리 중 문제가 발생했습니다. 주문을 다시 시작해주세요.");
     }
 }

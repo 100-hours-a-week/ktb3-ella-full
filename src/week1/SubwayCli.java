@@ -15,13 +15,14 @@ public class SubwayCli {
         VegetableCatalog vegetableCatalog = new VegetableCatalog();
         SourceCatalog sourceCatalog = new SourceCatalog();
         AdditionCatalog additionCatalog = new AdditionCatalog();
+        BreadToaster breadToaster = new BreadToaster();
 
         ProductCustomizer productCustomizer = new ProductCustomizer(
                 cheeseCatalog, additionCatalog, sourceCatalog, vegetableCatalog
         );
         OrderService orderService = new OrderService(
                 breadCatalog, cheeseCatalog, additionCatalog, sourceCatalog, vegetableCatalog,
-                outView, inputView, productCatalog, productCustomizer
+                outView, inputView, productCatalog, productCustomizer, breadToaster
         );
 
         orderService.startOrder();
