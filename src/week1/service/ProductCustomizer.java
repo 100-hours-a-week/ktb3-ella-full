@@ -6,6 +6,7 @@ import week1.service.catalog.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProductCustomizer {
 
@@ -32,11 +33,9 @@ public class ProductCustomizer {
     }
 
     public List<Addition> customizeAddition(List<Integer> additionNums){
-        List<Addition> selectedAdditions = new ArrayList<>();
-        for(int num : additionNums){
-            selectedAdditions.add(additionCatalog.getByNumber(num));
-        }
-        return selectedAdditions;
+        return additionNums.stream()
+                .map(additionCatalog::getByNumber)
+                .collect(Collectors.toList());
     }
 
     public List<Vegetable> customizeVegetable(List<Integer> vegetableNums){
