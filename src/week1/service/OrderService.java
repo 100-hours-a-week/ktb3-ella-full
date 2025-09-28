@@ -23,14 +23,11 @@ public class OrderService {
     private final VegetableCatalog vegetableCatalog;
     private final ProductCatalog productCatalog;
     private final ProductCustomizer productCustomizer;
-    private final BreadToaster breadToaster;
-
-    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
-    private Future<String> breadToastJob;
+    private final ToastService toastService;
 
     public OrderService(BreadCatalog breadCatalog, CheeseCatalog cheeseCatalog, AdditionCatalog additionCatalog,
                         SourceCatalog sourceCatalog, VegetableCatalog vegetableCatalog, OutView outView, InputView inputView,
-                        ProductCatalog productCatalog, ProductCustomizer productCustomizer, BreadToaster breadToaster) {
+                        ProductCatalog productCatalog, ProductCustomizer productCustomizer, ToastService toastService) {
         this.inputView = inputView;
         this.outView = outView;
         this.breadCatalog = breadCatalog;
@@ -40,7 +37,7 @@ public class OrderService {
         this.vegetableCatalog = vegetableCatalog;
         this.productCatalog = productCatalog;
         this.productCustomizer = productCustomizer;
-        this.breadToaster = breadToaster;
+        this.toastService = toastService;
     }
 
     public void startOrder() {
@@ -74,18 +71,20 @@ public class OrderService {
         List<Vegetable> vegetables = customizeVegetables();
         List<Source> sources = customizeSources();
         additions.forEach(customProduct::addAddition);
-        waitBreadToastIfNeeded();
+        toastService.awaitToastingComplete();
         outView.printOrderSummary(customProduct, cheese, additions, vegetables, sources);
     }
 
     private CustomizedBread customizeBreadFor() {
         outView.printCatalog(breadCatalog.getItems());
-        int breadNum = inputView.selectSingleOption("빵을 선택해주세요", breadCatalog.getCount());
+        int breadNum = inputView.selectSingleOption("빵을 선택해주세요2", breadCatalog.getCount());
         Bread selectedBread = breadCatalog.getByNumber(breadNum)
                 .orElseThrow(IllegalStateException::new);
         BreadSize breadSize = inputView.selectBreadSize();
         boolean isToasted = inputView.selectBreadToasted();
-        breadToastJob = isToasted ? executorService.submit(breadToaster::breadToast) : null;
+        if (isToasted) {
+            toastService.startToasting();
+        }
         return productCustomizer.customizeBread(selectedBread, breadSize, isToasted);
     }
 
@@ -111,23 +110,6 @@ public class OrderService {
         outView.printCatalog(sourceCatalog.getItems());
         List<Integer> sourceNums = inputView.selectMultiOptions("추가할 소스를 선택해주세요",  sourceCatalog.getCount());
         return productCustomizer.customizeSource(sourceNums);
-    }
-
-    private void waitBreadToastIfNeeded() {
-        if (breadToastJob == null) {
-            return;
-        }
-        try {
-            String result = breadToastJob.get();
-            outView.printBreadReadyMessage(result);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            outView.printBreadToastError();
-        } catch (ExecutionException e) {
-            outView.printBreadToastError();
-        } finally {
-            executorService.shutdown();
-        }
     }
 
 }

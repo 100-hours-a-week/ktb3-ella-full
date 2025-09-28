@@ -17,14 +17,24 @@ public class SubwayCli {
         AdditionCatalog additionCatalog = new AdditionCatalog();
         BreadToaster breadToaster = new BreadToaster();
 
+        ToastService toastService = new ToastService(breadToaster, outView);
         ProductCustomizer productCustomizer = new ProductCustomizer(
                 cheeseCatalog, additionCatalog, sourceCatalog, vegetableCatalog
         );
         OrderService orderService = new OrderService(
                 breadCatalog, cheeseCatalog, additionCatalog, sourceCatalog, vegetableCatalog,
-                outView, inputView, productCatalog, productCustomizer, breadToaster
+                outView, inputView, productCatalog, productCustomizer, toastService
         );
 
-        orderService.startOrder();
+        while (true) {
+            orderService.startOrder();
+            System.out.println("\n새 주문을 시작하려면 Enter를, 종료하려면 '종료'를 입력하세요.");
+            if (inputView.getLine().equals("종료")) {
+                break;
+            }
+        }
+
+        System.out.println("프로그램을 종료합니다.");
+        toastService.shutdown();
     }
 }

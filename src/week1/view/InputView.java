@@ -97,4 +97,7 @@ public class InputView {
             }
         }
     }
+    public String getLine() {
+        return scanner.nextLine().trim();
+    }
 }
