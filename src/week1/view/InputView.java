@@ -7,8 +7,6 @@ import java.util.Scanner;
 public class InputView {
 
     private final static int Min = 1;
-    private final static int BREAD_SMALL_SIZE = 15;
-    private final static int BREAD_LARGE_SIZE = 30;
 
     Scanner scanner = new Scanner(System.in);
 
@@ -61,44 +59,41 @@ public class InputView {
         }
     }
 
-    public int selectBreadSize() {
+    public BreadSize selectBreadSize() {
         System.out.println("빵 크기를 선택해주세요");
-        System.out.println("1. 15cm 2. 30cm");
+        for (BreadSize size : BreadSize.values()) {
+            System.out.printf("%d. %s ", size.getMenuNumber(), size.getDescription());
+        }
+        System.out.println();
         while (true) {
             String line = scanner.nextLine().trim();
-            try{
+            try {
                 int choice = Integer.parseInt(line);
-                if (choice >= 1 && choice <= 2) {
-                    if(choice == 1){
-                        return BREAD_SMALL_SIZE;
-                    }else {
-                        return BREAD_LARGE_SIZE;
-                    }
-                }
-                System.out.print(" !! 1번 ~ 2번 사이의 번호만 입력하세요");
-            }catch (NumberFormatException e) {
+                return BreadSize.fromMenuNumber(choice);
+            } catch (NumberFormatException e) {
                 System.out.println(" !! 숫자를 입력하세요. !!");
+            } catch (IllegalArgumentException e) {
+                System.out.println(" !! 메뉴에 있는 번호를 입력하세요. !!");
             }
         }
     }
 
     public boolean selectBreadToasted() {
         System.out.println("빵 구워드릴까요");
-        System.out.println("1. 예 2. 아니요");
+        for (ToastingOption option : ToastingOption.values()) {
+            System.out.printf("%d. %s ", option.getMenuNumber(), option.getDescription());
+        }
+        System.out.println();
         while (true) {
             String line = scanner.nextLine().trim();
-            try{
+            try {
                 int choice = Integer.parseInt(line);
-                if (choice >= 1 && choice <= 2) {
-                    if(choice == 1){
-                        return true;
-                    }else {
-                        return false;
-                    }
-                }
-                System.out.print(" !! 1번 ~ 2번 사이의 번호만 입력하세요");
-            }catch (NumberFormatException e) {
+                ToastingOption selectedOption = ToastingOption.fromMenuNumber(choice);
+                return selectedOption.isToasted();
+            } catch (NumberFormatException e) {
                 System.out.println(" !! 숫자를 입력하세요. !!");
+            } catch (IllegalArgumentException e) {
+                System.out.println(" !! 메뉴에 있는 번호를 입력하세요. !!");
             }
         }
     }

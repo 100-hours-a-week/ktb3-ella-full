@@ -2,6 +2,7 @@ package week1.service;
 
 import week1.domain.*;
 import week1.service.catalog.*;
+import week1.view.BreadSize;
 import week1.view.InputView;
 import week1.view.OutView;
 
@@ -80,7 +81,7 @@ public class OrderService {
         outView.printCatalog(breadCatalog.getItems());
         int breadNum = inputView.selectSingleOption("빵을 선택해주세요", breadCatalog.getCount());
         Bread selectedBread = breadCatalog.getByNumber(breadNum);
-        int breadSize = inputView.selectBreadSize();
+        BreadSize breadSize = inputView.selectBreadSize();
         boolean isToasted = inputView.selectBreadToasted();
         breadToastJob = isToasted ? executorService.submit(breadToaster::breadToast) : null;
         return productCustomizer.customizeBread(selectedBread, breadSize, isToasted);

@@ -3,6 +3,7 @@ package week1.service;
 
 import week1.domain.*;
 import week1.service.catalog.*;
+import week1.view.BreadSize;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,7 @@ public class ProductCustomizer {
         this.vegetableCatalog = vegetableCatalog;
     }
 
-    public CustomizedBread customizeBread(Bread bread, int breadSize, boolean isToasted) {
+    public CustomizedBread customizeBread(Bread bread, BreadSize breadSize, boolean isToasted) {
         return new CustomizedBread(bread, breadSize, isToasted);
     }
 

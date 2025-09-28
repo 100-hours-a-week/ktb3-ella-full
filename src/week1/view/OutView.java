@@ -49,7 +49,7 @@ public class OutView {
             String toastedStatus = customizedBread.isToasted() ? "구움" : "안 구움";
             System.out.printf("  - 빵: %s %dcm (%s)\n",
                     customizedBread.getName(),
-                    customizedBread.getBreadSize(),
+                    customizedBread.getBreadSizeValue(),
                     toastedStatus);
         }
         System.out.println("  - 치즈: " + cheese.getName());

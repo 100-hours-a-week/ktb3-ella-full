@@ -1,12 +1,11 @@
 package week1.domain;
 
 
+import week1.view.BreadSize;
+
 public class CustomSandwich extends CustomProduct {
     private final Sandwich sandwichMenu;
     private final CustomizedBread customizedBread;
-
-    private static final int BREAD_SMALL_SIZE = 15;
-    private static final int BREAD_LARGE_SIZE = 30;
 
     public CustomSandwich(Sandwich sandwichMenu, CustomizedBread customizedBread) {
         super(sandwichMenu.getName());
@@ -16,7 +15,7 @@ public class CustomSandwich extends CustomProduct {
 
     @Override
     public int getBasePrice() {
-        if (customizedBread.getBreadSize() == BREAD_SMALL_SIZE) {
+        if (customizedBread.getBreadSize() == BreadSize.SIZE_15) {
             return sandwichMenu.getPrice15cm();
         }
         return sandwichMenu.getPrice30cm();
@@ -24,8 +23,8 @@ public class CustomSandwich extends CustomProduct {
 
     @Override
     public int getPriceFor(Addition addition) {
-        if (customizedBread.getBreadSize() == BREAD_LARGE_SIZE) {
-            return addition.getPrice() * 2;
+        if (customizedBread.getBreadSize() == BreadSize.SIZE_30) {
+            return addition.getPrice()*2;
         }
         return addition.getPrice();
     }
