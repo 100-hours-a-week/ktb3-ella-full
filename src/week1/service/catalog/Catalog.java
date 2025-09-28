@@ -1,9 +1,8 @@
 package week1.service.catalog;
 
 import week1.domain.Nameable;
-import week1.domain.Priceable;
-
 import java.util.List;
+import java.util.Optional;
 
 public class Catalog<T extends Nameable> {
     private final List<T> items;
@@ -12,9 +11,9 @@ public class Catalog<T extends Nameable> {
         this.items = items;
     }
 
-    public T getByNumber(int number) {
-        if(number < 1 || number > items.size()){ return null; }
-        return items.get(number-1);
+    public Optional<T> getByNumber(int number) {
+        if(number < 1 || number > items.size()){ return Optional.empty(); }
+        return Optional.of(items.get(number-1));
     }
 
     public int getCount() {

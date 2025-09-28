@@ -52,7 +52,8 @@ public class OrderService {
     private Product selectMainProduct() {
         outView.printMenu(productCatalog.getItems());
         int productNum = inputView.selectSingleOption("메뉴를 선택해주세요", productCatalog.getCount());
-        return productCatalog.getByNumber(productNum);
+        return productCatalog.getByNumber(productNum)
+                .orElseThrow((IllegalStateException::new));
     }
 
     private void customizeProduct(Product product) {
@@ -80,7 +81,8 @@ public class OrderService {
     private CustomizedBread customizeBreadFor() {
         outView.printCatalog(breadCatalog.getItems());
         int breadNum = inputView.selectSingleOption("빵을 선택해주세요", breadCatalog.getCount());
-        Bread selectedBread = breadCatalog.getByNumber(breadNum);
+        Bread selectedBread = breadCatalog.getByNumber(breadNum)
+                .orElseThrow(IllegalStateException::new);
         BreadSize breadSize = inputView.selectBreadSize();
         boolean isToasted = inputView.selectBreadToasted();
         breadToastJob = isToasted ? executorService.submit(breadToaster::breadToast) : null;
