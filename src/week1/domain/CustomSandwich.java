@@ -32,4 +32,9 @@ public class CustomSandwich extends CustomProduct {
     public CustomizedBread getCustomizedBread() {
         return customizedBread;
     }
+
+    @Override
+    public String getMenuDescription() {
+        return sandwichMenu.getMenuDescription();
+    }
 }

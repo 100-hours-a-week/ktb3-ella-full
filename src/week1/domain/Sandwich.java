@@ -18,4 +18,9 @@ public class Sandwich extends Product {
     public int getPrice30cm() {
         return price30cm;
     }
+
+    @Override
+    public String getMenuDescription() {
+        return String.format("(15cm: %d원 | 30cm: %d원)", price15cm, price30cm);
+    }
 }

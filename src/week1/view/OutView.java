@@ -27,12 +27,7 @@ public class OutView {
         System.out.println("\n--------------------메뉴--------------------");
         for(int i=0; i<products.size(); i++) {
             Product product = products.get(i);
-            System.out.print((i+1)+"."+ product.getName()+" ");
-            if (product instanceof Sandwich sandwich) {
-                System.out.printf("(15cm: %d원 | 30cm: %d원)\n", sandwich.getPrice15cm(), sandwich.getPrice30cm());
-            } else if (product instanceof Salad salad) {
-                System.out.printf("(%d원)\n", salad.getBasePrice());
-            }
+            System.out.printf("%d.%s %s\n", (i+1), product.getName(), product.getMenuDescription());
         }
         System.out.println("-------------------------------------------");
     }

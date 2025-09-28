@@ -1,6 +1,6 @@
 package week1.domain;
 
-public class Product implements Nameable {
+public abstract class Product implements Nameable {
     private final String name;
 
     public Product (String name){
@@ -11,4 +11,6 @@ public class Product implements Nameable {
     public String getName() {
         return name;
     }
+
+    public abstract String getMenuDescription();
 }

@@ -17,4 +17,9 @@ public class Salad extends CustomProduct {
     public int getPriceFor(Addition addition) {
         return addition.getPrice();
     }
+
+    @Override
+    public String getMenuDescription() {
+        return String.format("(%d원)", price);
+    }
 }
