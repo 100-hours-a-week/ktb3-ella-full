@@ -37,14 +37,15 @@ public class OutView {
         System.out.println("-------------------------------------------");
     }
 
-    public void printOrderSummary(CustomProduct customProduct, CustomizedBread customizedBread, Cheese cheese, List<Addition> additions,
+    public void printOrderSummary(CustomProduct customProduct, Cheese cheese, List<Addition> additions,
                                   List<Vegetable> vegetables, List<Source> sources) {
 
         System.out.println("\n------------------ 영수증 ---------------------");
 
         System.out.printf("%s: %,d원\n", customProduct.getName(), customProduct.getBasePrice());
 
-        if (customProduct instanceof Sandwich) {
+        if (customProduct instanceof CustomSandwich customSandwich) {
+            CustomizedBread customizedBread = customSandwich.getCustomizedBread();
             String toastedStatus = customizedBread.isToasted() ? "구움" : "안 구움";
             System.out.printf("  - 빵: %s %dcm (%s)\n",
                     customizedBread.getName(),

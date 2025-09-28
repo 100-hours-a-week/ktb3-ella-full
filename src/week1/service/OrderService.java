@@ -44,34 +44,39 @@ public class OrderService {
 
     public void startOrder() {
         outView.WelcomeView();
-        CustomProduct customProduct = selectMainProduct();
-        customizeProduct(customProduct);
+        Product product = selectMainProduct();
+        customizeProduct(product);
     }
 
-    private CustomProduct selectMainProduct() {
+    private Product selectMainProduct() {
         outView.printMenu(productCatalog.getItems());
         int productNum = inputView.selectSingleOption("메뉴를 선택해주세요", productCatalog.getCount());
-        return (CustomProduct) productCatalog.getByNumber(productNum);
+        return productCatalog.getByNumber(productNum);
     }
 
-    private void customizeProduct(CustomProduct customProduct) {
-        CustomizedBread customizedBread = customizeBreadFor(customProduct);
+    private void customizeProduct(Product product) {
+        CustomProduct customProduct;
+        CustomizedBread customizedBread = null;
+
+        if (product instanceof Sandwich) {
+            customizedBread = customizeBreadFor();
+            customProduct = new CustomSandwich((Sandwich) product, customizedBread);
+        } else if (product instanceof Salad) {
+            customProduct = (Salad) product;
+        } else {
+            System.out.println("선택할 수 없는 메뉴입니다.");
+            return;
+        }
         Cheese cheese = customizeCheese();
         List<Addition> additions = customizeAdditions();
         List<Vegetable> vegetables = customizeVegetables();
         List<Source> sources = customizeSources();
-        if (customProduct instanceof Sandwich) {
-            ((Sandwich) customProduct).setBreadCustom(customizedBread);
-        }
         additions.forEach(customProduct::addAddition);
         waitBreadToastIfNeeded();
-        outView.printOrderSummary(customProduct, customizedBread, cheese, additions, vegetables, sources);
+        outView.printOrderSummary(customProduct, cheese, additions, vegetables, sources);
     }
 
-    private CustomizedBread customizeBreadFor(CustomProduct product) {
-        if (!(product instanceof Sandwich)) {
-            return null;
-        }
+    private CustomizedBread customizeBreadFor() {
         outView.printCatalog(breadCatalog.getItems());
         int breadNum = inputView.selectSingleOption("빵을 선택해주세요", breadCatalog.getCount());
         Bread selectedBread = breadCatalog.getByNumber(breadNum);
